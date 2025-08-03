@@ -2,6 +2,12 @@ spring:
   application:
     name: email
 
+  rabbitmq:
+    port: 5672
+    host: localhost
+    username: username
+    password: password
+
   mail:
     host: smtp.gmail.com
     port: 587
