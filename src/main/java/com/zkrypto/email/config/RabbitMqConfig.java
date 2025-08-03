@@ -1,5 +1,9 @@
 package com.zkrypto.email.config;
 
+import org.springframework.amqp.core.Binding;
+import org.springframework.amqp.core.BindingBuilder;
+import org.springframework.amqp.core.DirectExchange;
+import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -22,6 +26,33 @@ public class RabbitMqConfig {
 
     @Value("${spring.rabbitmq.password}")
     private String password;
+
+    @Value("${spring.rabbitmq.template.exchange}")
+    private String exchange;
+
+    @Value("${spring.rabbitmq.template.routing-key}")
+    private String routingKey;
+
+    @Value("${spring.rabbitmq.template.default-receive-queue}")
+    private String queue;
+
+    @Bean
+    DirectExchange directExchange() {
+        return new DirectExchange(exchange);
+    }
+
+    @Bean
+    Queue queue() {
+        return new Queue(queue, false);
+    }
+
+    @Bean
+    Binding directBinding(DirectExchange directExchange, Queue queue) {
+        return BindingBuilder
+                .bind(queue)
+                .to(directExchange)
+                .with(routingKey);
+    }
 
     @Bean
     public ConnectionFactory connectionFactory() {
