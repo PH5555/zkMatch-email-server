@@ -1,0 +1,29 @@
+spring:
+  application:
+    name: email
+
+  rabbitmq:
+    port: 5672
+    host: localhost
+    username: username
+    password: password
+    template:
+      routing-key: email.routing.key
+      exchange: email.exchange.direct
+      default-receive-queue: email.queue
+
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: lmkn5342@hanyang.ac.kr
+    password: ${email.password}
+    default-encoding: utf-8
+    properties:
+      mail:
+        mime:
+          charset: UTF-8
+        smtp:
+          auth: true
+          timeout: 5000
+          starttls:
+            enable: true

@@ -1,0 +1,19 @@
+spring:
+  application:
+    name: email
+
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: lmkn5342@hanyang.ac.kr
+    password: ${email.password}
+    default-encoding: utf-8
+    properties:
+      mail:
+        mime:
+          charset: UTF-8
+        smtp:
+          auth: true
+          timeout: 5000
+          starttls:
+            enable: true
